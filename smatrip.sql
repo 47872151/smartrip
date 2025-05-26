@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [SMARTRIP]    Script Date: 23/5/2025 10:39:15 ******/
+/****** Object:  Database [SMARTRIP]    Script Date: 26/5/2025 12:14:22 ******/
 CREATE DATABASE [SMARTRIP]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -79,10 +79,10 @@ ALTER DATABASE [SMARTRIP] SET QUERY_STORE = OFF
 GO
 USE [SMARTRIP]
 GO
-/****** Object:  User [alumno]    Script Date: 23/5/2025 10:39:16 ******/
+/****** Object:  User [alumno]    Script Date: 26/5/2025 12:14:22 ******/
 CREATE USER [alumno] FOR LOGIN [alumno] WITH DEFAULT_SCHEMA=[dbo]
 GO
-/****** Object:  Table [dbo].[CONSULTAS]    Script Date: 23/5/2025 10:39:16 ******/
+/****** Object:  Table [dbo].[CONSULTAS]    Script Date: 26/5/2025 12:14:22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -96,36 +96,20 @@ CREATE TABLE [dbo].[CONSULTAS](
 	[origenLongitud] [varchar](255) NOT NULL,
 	[destinoLatitud] [varchar](255) NOT NULL,
 	[destinoLongitud] [varchar](255) NOT NULL,
+	[idViaje] [int] NOT NULL,
  CONSTRAINT [PK_CONSULTAS] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[DIRECCIONES]    Script Date: 23/5/2025 10:39:16 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[DIRECCIONES](
-	[id] [int] NOT NULL,
-	[nombre] [varchar](255) NOT NULL,
-	[direccion] [varchar](500) NOT NULL,
-	[latitud] [varchar](50) NOT NULL,
-	[longitud] [varchar](50) NOT NULL,
- CONSTRAINT [PK_DIRECCIONES] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[DIRECCIONES_FRECUENTES]    Script Date: 23/5/2025 10:39:16 ******/
+/****** Object:  Table [dbo].[DIRECCIONES_FRECUENTES]    Script Date: 26/5/2025 12:14:22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[DIRECCIONES_FRECUENTES](
-	[id] [int] NOT NULL,
+	[id] [int] IDENTITY(1,1) NOT NULL,
 	[idUsuario] [int] NOT NULL,
 	[nombre] [varchar](50) NOT NULL,
 	[latitud] [varchar](255) NOT NULL,
@@ -136,7 +120,7 @@ CREATE TABLE [dbo].[DIRECCIONES_FRECUENTES](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[EMPRESA]    Script Date: 23/5/2025 10:39:16 ******/
+/****** Object:  Table [dbo].[EMPRESA]    Script Date: 26/5/2025 12:14:22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -144,14 +128,14 @@ GO
 CREATE TABLE [dbo].[EMPRESA](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Nombre] [varchar](50) NOT NULL,
-	[CantidadAutos] [int] NOT NULL,
+	[url_api] [varchar](200) NOT NULL,
  CONSTRAINT [PK_EMPRESA] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PAGOS]    Script Date: 23/5/2025 10:39:16 ******/
+/****** Object:  Table [dbo].[PAGOS]    Script Date: 26/5/2025 12:14:22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -162,13 +146,14 @@ CREATE TABLE [dbo].[PAGOS](
 	[Costo] [decimal](10, 2) NOT NULL,
 	[FechaPago] [date] NOT NULL,
 	[MetodoPago] [varchar](50) NOT NULL,
+	[IDPrecio] [int] NOT NULL,
  CONSTRAINT [PK_PAGOS] PRIMARY KEY CLUSTERED 
 (
 	[IDPago] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PRECIOS]    Script Date: 23/5/2025 10:39:16 ******/
+/****** Object:  Table [dbo].[PRECIOS]    Script Date: 26/5/2025 12:14:22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -181,23 +166,19 @@ CREATE TABLE [dbo].[PRECIOS](
 	[origenLongitud] [varchar](255) NOT NULL,
 	[destinoLatitud] [varchar](255) NOT NULL,
 	[destinoLongitud] [varchar](255) NOT NULL,
-	[precioEstimado] [decimal](18, 0) NOT NULL,
-	[tiempoEstimado] [time](7) NOT NULL,
-	[metodoPago] [varchar](50) NOT NULL,
-	[fechaConsulta] [date] NOT NULL,
  CONSTRAINT [PK_PRECIOS] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PREFERENCIAS]    Script Date: 23/5/2025 10:39:16 ******/
+/****** Object:  Table [dbo].[PREFERENCIAS]    Script Date: 26/5/2025 12:14:22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[PREFERENCIAS](
-	[id] [int] NOT NULL,
+	[id] [int] IDENTITY(1,1) NOT NULL,
 	[idUsuario] [int] NOT NULL,
 	[modo_transporte_preferido] [varchar](255) NOT NULL,
 	[moneda_preferida] [varchar](255) NOT NULL,
@@ -208,7 +189,24 @@ CREATE TABLE [dbo].[PREFERENCIAS](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[USUARIO]    Script Date: 23/5/2025 10:39:16 ******/
+/****** Object:  Table [dbo].[RESULTADOS_CONSULTA]    Script Date: 26/5/2025 12:14:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RESULTADOS_CONSULTA](
+	[id] [int] NOT NULL,
+	[idConsulta] [int] NOT NULL,
+	[idEmpresa] [int] NOT NULL,
+	[precio_estimado] [decimal](18, 0) NOT NULL,
+	[tiempo_estimado] [time](7) NOT NULL,
+ CONSTRAINT [PK_RESULTADOS_CONSULTA] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[USUARIO]    Script Date: 26/5/2025 12:14:22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -229,13 +227,33 @@ CREATE TABLE [dbo].[USUARIO](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+/****** Object:  Table [dbo].[VIAJES]    Script Date: 26/5/2025 12:14:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[VIAJES](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[idUsuario] [int] NOT NULL,
+	[origen] [varchar](200) NOT NULL,
+	[destino] [varchar](200) NOT NULL,
+	[fecha] [date] NOT NULL,
+	[estado] [varchar](50) NOT NULL,
+	[hora] [time](7) NOT NULL,
+	[idPago] [int] NOT NULL,
+ CONSTRAINT [PK_VIAJES] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
 SET IDENTITY_INSERT [dbo].[EMPRESA] ON 
 GO
-INSERT [dbo].[EMPRESA] ([ID], [Nombre], [CantidadAutos]) VALUES (1, N'Uber', 50)
+INSERT [dbo].[EMPRESA] ([ID], [Nombre], [url_api]) VALUES (1, N'Uber', N'50')
 GO
-INSERT [dbo].[EMPRESA] ([ID], [Nombre], [CantidadAutos]) VALUES (2, N'Cabify', 40)
+INSERT [dbo].[EMPRESA] ([ID], [Nombre], [url_api]) VALUES (2, N'Cabify', N'40')
 GO
-INSERT [dbo].[EMPRESA] ([ID], [Nombre], [CantidadAutos]) VALUES (3, N'DiDi', 30)
+INSERT [dbo].[EMPRESA] ([ID], [Nombre], [url_api]) VALUES (3, N'DiDi', N'30')
 GO
 SET IDENTITY_INSERT [dbo].[EMPRESA] OFF
 GO
@@ -454,6 +472,55 @@ GO
 INSERT [dbo].[USUARIO] ([nombre], [apellido], [fechaNacimiento], [genero], [email], [telefono], [contrasena], [idUsuario], [premium]) VALUES (N'Joaquin', N'Paterno', CAST(N'2008-03-18' AS Date), N'Hombre', N'a@gmail.com', NULL, N'name = "costo"', 115, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[USUARIO] OFF
+GO
+ALTER TABLE [dbo].[CONSULTAS]  WITH CHECK ADD  CONSTRAINT [FK_CONSULTAS_USUARIO] FOREIGN KEY([idUsuario])
+REFERENCES [dbo].[USUARIO] ([idUsuario])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[CONSULTAS] CHECK CONSTRAINT [FK_CONSULTAS_USUARIO]
+GO
+ALTER TABLE [dbo].[DIRECCIONES_FRECUENTES]  WITH CHECK ADD  CONSTRAINT [FK_DIRECCIONES_FRECUENTES_USUARIO] FOREIGN KEY([idUsuario])
+REFERENCES [dbo].[USUARIO] ([idUsuario])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[DIRECCIONES_FRECUENTES] CHECK CONSTRAINT [FK_DIRECCIONES_FRECUENTES_USUARIO]
+GO
+ALTER TABLE [dbo].[PAGOS]  WITH CHECK ADD  CONSTRAINT [FK_PAGOS_VIAJES] FOREIGN KEY([IDViaje])
+REFERENCES [dbo].[VIAJES] ([id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[PAGOS] CHECK CONSTRAINT [FK_PAGOS_VIAJES]
+GO
+ALTER TABLE [dbo].[PRECIOS]  WITH CHECK ADD  CONSTRAINT [FK_PRECIOS_EMPRESA] FOREIGN KEY([idEmpresa])
+REFERENCES [dbo].[EMPRESA] ([ID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[PRECIOS] CHECK CONSTRAINT [FK_PRECIOS_EMPRESA]
+GO
+ALTER TABLE [dbo].[PRECIOS]  WITH CHECK ADD  CONSTRAINT [FK_PRECIOS_USUARIO] FOREIGN KEY([idUsuario])
+REFERENCES [dbo].[USUARIO] ([idUsuario])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[PRECIOS] CHECK CONSTRAINT [FK_PRECIOS_USUARIO]
+GO
+ALTER TABLE [dbo].[PREFERENCIAS]  WITH CHECK ADD  CONSTRAINT [FK_PREFERENCIAS_USUARIO] FOREIGN KEY([idUsuario])
+REFERENCES [dbo].[USUARIO] ([idUsuario])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[PREFERENCIAS] CHECK CONSTRAINT [FK_PREFERENCIAS_USUARIO]
+GO
+ALTER TABLE [dbo].[VIAJES]  WITH CHECK ADD  CONSTRAINT [FK_VIAJES_USUARIO] FOREIGN KEY([idUsuario])
+REFERENCES [dbo].[USUARIO] ([idUsuario])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[VIAJES] CHECK CONSTRAINT [FK_VIAJES_USUARIO]
 GO
 USE [master]
 GO
