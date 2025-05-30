@@ -1,28 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import * as SplashScreen from 'expo-splash-screen';
 import { ImageBackground } from 'react-native';
+import * as Font from 'expo-font';
 
 export default function App() {
   const [user, setUser] = React.useState("");
   const [contraseña, setContraseña] = React.useState("");
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
-    async function prepare() {
-      try {
-        await SplashScreen.preventAutoHideAsync();
-        setTimeout(async () => {
-          await SplashScreen.hideAsync();
-        }, 1000);
-      } catch (e) {
-        console.warn(e);
-      }
+    SplashScreen.preventAutoHideAsync();
+    async function loadFonts() {
+      await Font.loadAsync({
+        'Unageo-Medium': require('./assets/fonts/Unageo-Medium.ttf'),
+        'Coolvetica-Rg': require('./assets/fonts/Coolvetica-Rg-It.otf'),
+      });
+      setFontsLoaded(true);
+      await SplashScreen.hideAsync();
     }
-    prepare();
+    loadFonts();
   }, []);
-
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
         <View style={styles.container}>  
         <StatusBar style="auto" /> 
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },  
   logoContainer: {
-    marginBottom: -30, // Empuja hacia abajo
+    marginBottom: -30,
     },  
   olvPass: {
     textAlign: "right",
@@ -82,6 +85,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     color: "#03045E",
     textDecorationLine: 'underline',
+    fontFamily: 'Unageo-Medium'
   },
   botones:{
     width: '100%',
@@ -100,10 +104,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     backgroundColor: '#CAF0F8',
     color: '#03045E',
+    fontFamily: 'Unageo-Medium'
   },  
   texto: {
     fontSize: 26,
     color: "#03045E",
+    fontFamily: 'Unageo-Medium'
   },
   button1: {
     flexDirection: 'row',
@@ -114,6 +120,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: '100%',
     justifyContent: 'center',
+    
   },
   button2: {
     flexDirection: 'row',
@@ -130,11 +137,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     fontSize: 18,
+    fontFamily: 'Unageo-Medium'
   },
   buttonText2: {
     marginLeft: 8,
     fontWeight: 'bold',
     fontSize: 18,
-    color: '#03045E'
+    color: '#03045E',
+    fontFamily: 'Unageo-Medium'
   },
 });

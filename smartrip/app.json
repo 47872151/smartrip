@@ -29,7 +29,8 @@
           "image": "./assets/LOGO.png",
           "imageWidth": 200
         }
-      ]
+      ],
+      "expo-font"
     ]
   }
 }
