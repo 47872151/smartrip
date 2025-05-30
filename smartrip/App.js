@@ -26,6 +26,16 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
+  const handleSubmit = (e) => {
+    const userValido = validarUser(user);
+    const contraseñaValida = validarContraseña(contraseña);
+    if (userValido && contraseñaValida) {
+      alert("Te registraste correctamente. ¡Bienvenido a bordo!");
+      //enviar a la proxima pagina
+    } else {
+      alert("Verificá los datos. Algo está mal.");
+    }
+  };
   return (
         <View style={styles.container}>  
         <StatusBar style="auto" /> 
@@ -36,12 +46,12 @@ export default function App() {
         <View style={{ width: '100%' }}>
         <Text style={styles.olvPass}>Olvidé mi contraseña</Text>
         </View>
-        <View style={styles.botones}>
-        </View>
-        <Pressable style={styles.button1}>
+        <Pressable style={styles.button1} onPress={handleSubmit}>
           <Text style={styles.buttonText1}>Iniciar sesión</Text>    
           <FontAwesome name="sign-in" size={20} color="white" marginLeft="10" />
         </Pressable>
+        <View style={styles.botones}>
+        </View>
         <Pressable style={styles.button2}>
           <FontAwesome name="google" size={20} color="#03045E" marginRight="5" />
           <Text style={styles.buttonText2}>Continuar con Google</Text>
@@ -51,7 +61,7 @@ export default function App() {
         </Pressable>
         </View>
         <View style={styles.logoContainer}>
-          <ImageBackground source={require('./assets/LOGO.png')} resizeMode='contain' style={styles.image} />
+          <ImageBackground source={require('./assets/imgs/LOGO.png')} resizeMode='contain' style={styles.image} />
         </View>
 
       </View>
@@ -116,6 +126,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 18,
     marginVertical: 5,
+    marginTop: 15,
     backgroundColor: '#00B4D8',
     borderRadius: 15,
     width: '100%',
