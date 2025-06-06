@@ -26,7 +26,13 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-  const handleSubmit = (e) => {
+  const validarContraseña = (c) =>{
+    return true;
+  }
+  const validarUser = (c) =>{
+    return true;
+  }
+  const handleSubmit = () => {
     const userValido = validarUser(user);
     const contraseñaValida = validarContraseña(contraseña);
     if (userValido && contraseñaValida) {
@@ -37,7 +43,10 @@ export default function App() {
     }
   };
   return (
-        <View style={styles.container}>  
+        <View style={styles.container}>
+        <View style={styles.logoContainer}>
+          <ImageBackground source={require('./assets/imgs/LOGO.png')} resizeMode='contain' style={styles.image} />
+        </View>  
         <StatusBar style="auto" /> 
         <View style={styles.form}>   
         <Text style={ styles.texto }>¿Cuál es tú número de teléfono o email?</Text>
@@ -60,9 +69,7 @@ export default function App() {
           <Text style={styles.buttonText1}>Registrarse</Text>
         </Pressable>
         </View>
-        <View style={styles.logoContainer}>
-          <ImageBackground source={require('./assets/imgs/LOGO.png')} resizeMode='contain' style={styles.image} />
-        </View>
+        
 
       </View>
   );
@@ -80,6 +87,11 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 100,
     marginBottom: 100,
+    borderColor: '#90E0EF',
+    borderWidth: 1,
+    padding: 25,
+    borderRadius: "5%",
+    backgroundColor: "rgba(202, 240, 248, 0.4)"
   },
   image: {
     width: 200,
@@ -87,7 +99,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },  
   logoContainer: {
-    marginBottom: -30,
+    marginTop: "15%",
+    marginBottom: "-25%",
     },  
   olvPass: {
     textAlign: "right",
