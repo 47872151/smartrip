@@ -5,8 +5,8 @@ import { FontAwesome } from '@expo/vector-icons';
 import * as SplashScreen from 'expo-splash-screen';
 import { ImageBackground } from 'react-native';
 import * as Font from 'expo-font';
-
 export default function App() {
+  
   const [user, setUser] = React.useState("");
   const [contraseña, setContraseña] = React.useState("");
   const [fontsLoaded, setFontsLoaded] = useState(false);
