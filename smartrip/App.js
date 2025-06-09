@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
 import HomeStack from './stacks/HomeStack';
-import uberRoutes from './routes/uber.js';
-app.use('/apis/UberAPI', uberRoutes);
+//import uberRoutes from './routes/uber.js';
+//app.use('/apis/UberAPI', uberRoutes);
 const RootStack = createNativeStackNavigator();
 
 export default function App() {

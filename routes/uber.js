@@ -1,5 +1,5 @@
 import express from 'express';
-import { getPriceEstimates, getTimeEstimates, createRide } from '../UberAPI.js';
+import { getPriceEstimates, getTimeEstimates, createRide } from '../apis/UberAPI.js';
 
 const router = express.Router();
 

@@ -37,7 +37,6 @@ export default function Login() {
     const userValido = validarUser(user);
     const contraseñaValida = validarContraseña(contraseña);
     if (userValido && contraseñaValida) {
-      alert("Te registraste correctamente. ¡Bienvenido a bordo!");
       navigation.navigate('HomeStack');
     }
       else {
@@ -53,15 +52,23 @@ export default function Login() {
         <View style={styles.form}>   
         <Text style={ styles.texto }>¿Cuál es tú número de teléfono o email?</Text>
         <TextInput style={styles.input} placeholder="Introducí tú número de teléfono o email" placeholderTextColor="rgba(3, 4, 94, 0.6)" value={user} onChangeText={setUser} />
+        <View style = {styles.textContraseña}>
+        <Text style={ styles.texto }>Contraseña</Text>
+        <Text style={styles.olvPass}>Olvidé mi contraseña</Text>
+        </View>
         <TextInput secureTextEntry={true} placeholder="Contraseña" placeholderTextColor="rgba(3, 4, 94, 0.6)" value={contraseña} onChangeText={setContraseña} style={styles.input} />
         <View style={{ width: '100%' }}>
-        <Text style={styles.olvPass}>Olvidé mi contraseña</Text>
         </View>
         <Pressable style={styles.button1} onPress={handleSubmit}>
           <Text style={styles.buttonText1}>Iniciar sesión</Text>    
           <FontAwesome name="sign-in" size={20} color="white" marginLeft="10" />
         </Pressable>
+        <View style={styles.textContraseña}>
         <View style={styles.botones}>
+        </View>
+        <Text>O continuar con</Text>
+        <View style={styles.botones}>
+        </View>
         </View>
         <Pressable style={styles.button2}>
           <FontAwesome name="google" size={20} color="#03045E" marginRight="5" />
@@ -88,7 +95,7 @@ const styles = StyleSheet.create({
     marginTop: 100,
     marginBottom: 100,
     borderColor: '#90E0EF',
-    borderWidth: 1,
+    borderWidth: 0,
     padding: 25,
     borderRadius: "5%",
     backgroundColor: "rgba(202, 240, 248, 0.4)"
@@ -102,38 +109,43 @@ const styles = StyleSheet.create({
     marginTop: "15%",
     marginBottom: "-25%",
     },  
-  olvPass: {
-    textAlign: "right",
-    fontSize: 16,
-    marginBottom: 5,
-    color: "#03045E",
-    textDecorationLine: 'underline',
-    fontFamily: 'Unageo-Medium'
-  },
   botones:{
-    width: '100%',
+    width: '30%',
     borderTopWidth: 1,
     margin: 20,
     marginLeft: 3,
     borderColor: '#03045E',
   },
+  textContraseña: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  texto: {
+    fontSize: 16,
+    color: "#03045E",
+    fontFamily: 'Inter'
+  },
+  olvPass: {
+    textAlign: "right",
+    fontSize: 16,
+    marginBottom: 5,
+    color: "#03045E",
+    fontFamily: 'Inter',
+  },
   input: {
     width: '100%',
-    borderWidth: 5,
-    borderColor: '#CAF0F8',
-    borderRadius: 20,
-    padding: 12,
+    borderWidth: 2,
+    borderColor: '#90E0EF',
+    borderRadius: 10,
+    padding: 16,
     marginVertical: 8,
     fontSize: 18,
     backgroundColor: '#CAF0F8',
     color: '#03045E',
-    fontFamily: 'Unageo-Medium'
+    fontFamily: 'Inter'
   },  
-  texto: {
-    fontSize: 26,
-    color: "#03045E",
-    fontFamily: 'Unageo-Medium'
-  },
   button1: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -141,7 +153,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     marginTop: 15,
     backgroundColor: '#00B4D8',
-    borderRadius: 15,
+    borderRadius: 10,
     width: '100%',
     justifyContent: 'center',
     
@@ -152,22 +164,20 @@ const styles = StyleSheet.create({
     padding: 18,
     marginVertical: 5,
     backgroundColor: '#CAF0F8',
-    borderRadius: 15,
+    borderRadius: 10,
     width: '100%',
     justifyContent: 'center',
   },
   buttonText1: {
     marginLeft: 8,
-    fontWeight: 'bold',
     color: 'white',
     fontSize: 18,
-    fontFamily: 'Unageo-Medium'
+    fontFamily: 'Inter'
   },
   buttonText2: {
     marginLeft: 8,
-    fontWeight: 'bold',
     fontSize: 18,
     color: '#03045E',
-    fontFamily: 'Unageo-Medium'
+    fontFamily: 'Inter'
   },
 });
