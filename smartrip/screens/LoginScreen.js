@@ -63,10 +63,10 @@ export default function Login() {
           <Text style={styles.buttonText1}>Iniciar sesión</Text>    
           <FontAwesome name="sign-in" size={20} color="white" marginLeft="10" />
         </Pressable>
-        <View style={styles.textContraseña}>
+        <View style={[styles.textContraseña, { padding: 15 }]}>
         <View style={styles.botones}>
         </View>
-        <Text>O continuar con</Text>
+        <Text style={styles.continuar}>O continuar con</Text>
         <View style={styles.botones}>
         </View>
         </View>
@@ -74,8 +74,11 @@ export default function Login() {
           <FontAwesome name="google" size={20} color="#03045E" marginRight="5" />
           <Text style={styles.buttonText2}>Continuar con Google</Text>
         </Pressable>
-        <Pressable style={styles.button1}>
-          <Text style={styles.buttonText1}>Registrarse</Text>
+        <View style={[styles.textContraseña, { padding: 5 }, { paddingTop: 15 }]}>
+        <Text style={styles.continuar}>¿No tienes una cuenta?</Text>
+        </View>
+        <Pressable style={styles.button3}>
+          <Text style={styles.buttonText3}>Registrarse</Text>
         </Pressable>
         </View>
       </View>
@@ -112,9 +115,10 @@ const styles = StyleSheet.create({
   botones:{
     width: '30%',
     borderTopWidth: 1,
-    margin: 20,
-    marginLeft: 3,
-    borderColor: '#03045E',
+    borderColor: '#C3C7CA',
+  },
+  continuar:{
+    color: '#6B7280',
   },
   textContraseña: {
     flexDirection: 'row',
@@ -124,14 +128,14 @@ const styles = StyleSheet.create({
   },
   texto: {
     fontSize: 16,
-    color: "#03045E",
+    color: "#111827",
     fontFamily: 'Inter'
   },
   olvPass: {
     textAlign: "right",
     fontSize: 16,
     marginBottom: 5,
-    color: "#03045E",
+    color: "#008798",
     fontFamily: 'Inter',
   },
   input: {
@@ -143,7 +147,6 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     fontSize: 18,
     backgroundColor: '#CAF0F8',
-    color: '#03045E',
     fontFamily: 'Inter'
   },  
   button1: {
@@ -163,10 +166,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 18,
     marginVertical: 5,
-    backgroundColor: '#CAF0F8',
+    borderWidth: 1,
+    borderColor: "#90E0EF",
     borderRadius: 10,
     width: '100%',
     justifyContent: 'center',
+  },
+  button3: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 18,
+    marginVertical: 5,
+    borderWidth: 1,
+    borderColor: "#90E0EF",
+    borderRadius: 10,
+    width: '100%',
+    justifyContent: 'center',
+    backgroundColor: "#DFFBFF"
   },
   buttonText1: {
     marginLeft: 8,
@@ -177,7 +193,13 @@ const styles = StyleSheet.create({
   buttonText2: {
     marginLeft: 8,
     fontSize: 18,
-    color: '#03045E',
+    color: '#1F2937',
+    fontFamily: 'Inter'
+  },
+  buttonText3: {
+    marginLeft: 8,
+    fontSize: 18,
+    color: '#00BCD4',
     fontFamily: 'Inter'
   },
 });
