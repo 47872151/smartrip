@@ -15,7 +15,8 @@
         "foregroundImage": "./assets/LOGO.png",
         "backgroundColor": "#00B4D8"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.anonymous.smartrip"
     },
     "web": {
       "favicon": "./assets/LOGO.png"
