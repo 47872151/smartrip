@@ -6,7 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { ImageBackground } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
-import Registrarse1Screen from './Registrarse1Screen';
+import Registrarse1Screen from '../tabs/Registrarse1Tab';
 
 export default function Login() {
   const navigation = useNavigation();
@@ -68,7 +68,7 @@ export default function Login() {
         <View style={[styles.textContraseña, { padding: 5 }, { paddingTop: 15 }]}>
         <Text style={styles.continuar}>¿No tienes una cuenta?</Text>
         </View>
-        <Pressable style={styles.button3} onPress={() => navigation.navigate('Registrarse')}>
+        <Pressable style={styles.button3} onPress={() => navigation.navigate('RegistrarseStack')}>
           <Text style={styles.buttonText3}>Registrarse</Text>
         </Pressable>
         </View>
