@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Pressable, TouchableOpacity, Platform, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Pressable, TouchableOpacity, Platform, ScrollView, SafeAreaView } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { ImageBackground } from 'react-native';
 import * as Font from 'expo-font';
@@ -13,10 +13,26 @@ import { FontAwesome } from '@expo/vector-icons';
 
 export default function Registrarse1() {
   const navigation = useNavigation();
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [fechaNacimiento, setFechaNacimiento] = useState("");
-  const [genero, setGenero] = useState("");
+  const [persona, setPersona] = useState({
+    nombre: '',
+    apellido: '',
+    fechaNacimiento: '',
+    genero: '',
+    email: '',
+    telefono: '',
+    contrasena: ''
+  });
+
+  const [errores, setErrores] = useState({
+    nombre: '',
+    apellido: '',
+    fechaNacimiento: '',
+    genero: '',
+    email: '',
+    telefono: '',
+    contrasena: ''
+  });
+
   const [mostrarPicker, setMostrarPicker] = useState(false);
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
@@ -47,11 +63,12 @@ export default function Registrarse1() {
     if (!nombre || !apellido || !fechaNacimiento || !genero) {
       alert("Por favor completá todos los campos.");
     } else {
-      navigation.navigate("Registrarse2"); // o la pantalla siguiente
+      navigation.navigate("Registrarse2"); 
     }
   };
 
   return (
+    <SafeAreaView>
     <ScrollView> 
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -123,7 +140,9 @@ export default function Registrarse1() {
         <View style={[styles.textContraseña, { padding: 15 }]}>
                 <View style={styles.botones}>
                 </View>
+                <View style={styles.botones}>
                 <Text style={styles.continuar}>O regístrate con</Text>
+                </View>
                 <View style={styles.botones}>
                 </View>
                 </View>
@@ -145,6 +164,7 @@ export default function Registrarse1() {
       </View>
     </View>
     </ScrollView>
+    </SafeAreaView>
   );
 }
 

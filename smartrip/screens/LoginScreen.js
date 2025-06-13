@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Pressable} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import * as SplashScreen from 'expo-splash-screen';
 import { ImageBackground } from 'react-native';
@@ -46,6 +46,7 @@ export default function Login() {
     }
   };
   return (
+    
         <View style={styles.container}>
         <View style={styles.logoContainer}>
           <ImageBackground source={require('../assets/imgs/LOGO.png')} resizeMode='contain' style={styles.image} />
