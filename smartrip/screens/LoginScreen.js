@@ -4,8 +4,9 @@ import { StyleSheet, Text, View, TextInput, Pressable} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import * as SplashScreen from 'expo-splash-screen';
 import { ImageBackground } from 'react-native';
-import * as Font from 'expo-font';
+import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Registrarse1Screen from './Registrarse1Screen';
 
 export default function Login() {
@@ -13,25 +14,60 @@ export default function Login() {
   const [user, setUser] = React.useState("");
   const [contraseña, setContraseña] = React.useState("");
   SplashScreen.preventAutoHideAsync();
-  useEffect(() => {
-  }, []);
-  
   const validarContraseña = (c) =>{
     return true;
   }
+  const BD = "https://1f90-190-55-100-17.ngrok-free.app"
+  useEffect(() => {
+    axios.get('https://bf3d-200-73-176-50.ngrok-free.app/')
+      .then(() => console.log('Servidor accesible'))
+      .catch(e => console.log('Error conectando al servidor:', e.message));
+  }, []);
+  
   const validarUser = (c) =>{
-    return true;
-  }
-  const handleSubmit = () => {
-    const userValido = validarUser(user);
-    const contraseñaValida = validarContraseña(contraseña);
-    if (userValido && contraseñaValida) {
-      navigation.navigate('HomeStack');
-    }
-      else {
-      alert("Verificá los datos. Algo está mal.");
-    }
-  };
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    const telefonoRegex = /^\+54\s?9\s?(\d{2})\s?(\d{4})[-\s]?(\d{4})$/;
+    if (c.includes('@')) {
+      return emailRegex.test(c);
+    } else if (c.includes('+54')){
+      const telSinEspacios = c.replace(/\s+/g, '');
+      return telefonoRegex.test(telSinEspacios);
+    }  }
+    const handleSubmit = async () => {
+      const userValido = validarUser(user);
+      const contraseñaValida = validarContraseña(contraseña);
+    
+      if (!userValido || !contraseñaValida) {
+        alert("Verificá los datos. Algo está mal.");
+        return;
+      }
+    
+      try {
+        let endpoint = '';
+        let data = {};
+    
+        if (user.includes('@')) {
+          endpoint = 'loginMail';
+          data = { email: user, password: contraseña };
+        } else if (user.includes('+54')) {
+          endpoint = 'loginTel';
+          data = { tel: user, password: contraseña };
+        } else {
+          alert("Formato no reconocido.");
+          return;
+        }
+    
+        const res = await axios.post(`${BD}${endpoint}`, data);
+        const token = res.data.token;
+        await AsyncStorage.setItem('token', token);
+        alert('Login exitoso');
+        navigation.navigate('HomeStack');
+      } catch (error) {
+        console.log(error);
+        alert(error.response?.data?.error || 'Error al iniciar sesión');
+      }
+    };
+    
   SplashScreen.hideAsync();
   return (
     
@@ -42,12 +78,12 @@ export default function Login() {
         <StatusBar style="auto" /> 
         <View style={styles.form}>   
         <Text style={ styles.texto }>¿Cuál es tú número de teléfono o email?</Text>
-        <TextInput style={styles.input} placeholder="Introducí tú número de teléfono o email" placeholderTextColor="rgba(3, 4, 94, 0.6)" value={user} onChangeText={setUser} />
+        <TextInput style={styles.input} placeholder="Introducí tú número de teléfono o email" value={user} onChangeText={setUser} />
         <View style = {styles.textContraseña}>
         <Text style={ styles.texto }>Contraseña</Text>
         <Text style={styles.olvPass}>Olvidé mi contraseña</Text>
         </View>
-        <TextInput secureTextEntry={true} placeholder="Contraseña" placeholderTextColor="rgba(3, 4, 94, 0.6)" value={contraseña} onChangeText={setContraseña} style={styles.input} />
+        <TextInput secureTextEntry={true} placeholder="Contraseña" value={contraseña} onChangeText={setContraseña} style={styles.input} />
         <View style={{ width: '100%' }}>
         </View>
         <Pressable style={styles.button1} onPress={handleSubmit}>
@@ -138,7 +174,8 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     fontSize: 18,
     backgroundColor: '#CAF0F8',
-    fontFamily: 'Inter'
+    fontFamily: 'Inter',
+    color: '#CDCDCD'
   },  
   button1: {
     flexDirection: 'row',
