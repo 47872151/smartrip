@@ -12,23 +12,10 @@ export default function Login() {
   const navigation = useNavigation();
   const [user, setUser] = React.useState("");
   const [contraseña, setContraseña] = React.useState("");
-  const [fontsLoaded, setFontsLoaded] = useState(false);
-
+  SplashScreen.preventAutoHideAsync();
   useEffect(() => {
-    SplashScreen.preventAutoHideAsync();
-    async function loadFonts() {
-      await Font.loadAsync({
-        'Unageo-Medium': require('../assets/fonts/Unageo-Medium.ttf'),
-        'Coolvetica-Rg': require('../assets/fonts/Coolvetica-Rg-It.otf'),
-      });
-      setFontsLoaded(true);
-      await SplashScreen.hideAsync();
-    }
-    loadFonts();
   }, []);
-  if (!fontsLoaded) {
-    return null;
-  }
+  
   const validarContraseña = (c) =>{
     return true;
   }
@@ -45,6 +32,7 @@ export default function Login() {
       alert("Verificá los datos. Algo está mal.");
     }
   };
+  SplashScreen.hideAsync();
   return (
     
         <View style={styles.container}>
