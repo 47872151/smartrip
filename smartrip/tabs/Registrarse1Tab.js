@@ -9,7 +9,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import RNPickerSelect from 'react-native-picker-select';
 import { FontAwesome } from '@expo/vector-icons';
-import Registrarse2Tab from './Registrarse2Tab';
 
 export default function Registrarse1() {
   const navigation = useNavigation();
@@ -209,7 +208,7 @@ export default function Registrarse1() {
             </View>
 
             <Text style={{ marginTop: 20, textAlign: 'center' }}>
-              ¿Ya tienes una cuenta? <Text style={{ color: '#00B4D8' }}>Iniciar Sesión</Text>
+              ¿Ya tienes una cuenta? <Text style={{ color: '#00B4D8' }} onPress={() => navigation.navigate('Login')}>Iniciar Sesión</Text>
             </Text>
           </View>
         </View>

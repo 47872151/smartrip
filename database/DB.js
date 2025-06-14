@@ -1,10 +1,10 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: 'postgress',
-  host: 'localhost',           // o la IP si es remoto
+  user: 'postgres.tqyfxzfddptecafavjey',
+  host: 'aws-0-sa-east-1.pooler.supabase.com',           
   database: 'smartrip',
-  password: 'root',
+  password: 'SmarTrip_2025',
   port: 5432,                  
 });
 

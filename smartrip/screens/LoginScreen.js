@@ -7,8 +7,7 @@ import { ImageBackground } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Registrarse1Screen from './Registrarse1Screen';
-import Registrarse1Screen from '../tabs/Registrarse1Tab';
+import RegistrarseStack from '../stacks/RegistrarseStack';
 export default function Login() {
   const navigation = useNavigation();
   const [user, setUser] = React.useState("");
